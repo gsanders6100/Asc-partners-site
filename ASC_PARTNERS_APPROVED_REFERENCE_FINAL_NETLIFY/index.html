@@ -62,23 +62,11 @@ footer{background:#063765;color:#fff;padding:18px 0}.footer{display:grid;grid-te
         body: body.toString()
       });
       if (!response.ok) throw new Error('Submission not accepted (' + response.status + ')');
-      // This event is never triggered by visiting /thank-you.html directly.
-      var redirect = function () { window.location.assign('/thank-you.html'); };
-      var finished = false;
-      var safeRedirect = function () { if (!finished) { finished = true; redirect(); } };
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'conversion', {
-          'send_to': 'AW-18533620878/eeNcCL6p8KsdEI65woVF',
-          'value': 1.0,
-          'currency': 'USD',
-          'event_callback': safeRedirect,
-          'event_timeout': 1600
-        });
-        setTimeout(safeRedirect, 1800);
-      } else {
-        // No conversion claim if the tag fails to load; user submission still succeeds.
-        safeRedirect();
-      }
+      // The submission is accepted by Netlify. Remember this success for this tab only.
+      // Tracking fires on the next page, eliminating premature navigation before a hit.
+      try { sessionStorage.setItem('asc_verified_submission_pending', '1'); }
+      catch (storageError) { /* Form must remain usable even if storage is disabled. */ }
+      window.location.assign('/thank-you.html');
     } catch (error) {
       pending = false;
       if (button) {button.disabled = false; button.textContent = originalText;}

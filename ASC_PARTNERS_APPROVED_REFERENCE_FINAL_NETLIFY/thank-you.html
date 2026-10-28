@@ -1,1 +1,27 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Thank You | ASC Partners</title><style>body{margin:0;background:#eef8fb;color:#14385d;font-family:Arial,Helvetica,sans-serif}.box{max-width:680px;margin:14vh auto;background:#fff;padding:50px;text-align:center;border-radius:12px}h1{font-family:Georgia,serif;color:#073765}a{display:inline-block;margin-top:18px;background:#0783b8;color:#fff;text-decoration:none;padding:13px 22px;border-radius:4px;font-weight:bold}</style></head><body><div class="box"><h1>Thank you for contacting ASC Partners.</h1><p>Your inquiry has been submitted. Our team will get back with you.</p><a href="/">Return to Home</a></div></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Thank You | ASC Partners</title><style>body{margin:0;background:#eef8fb;color:#14385d;font-family:Arial,Helvetica,sans-serif}.box{max-width:680px;margin:14vh auto;background:#fff;padding:50px;text-align:center;border-radius:12px}h1{font-family:Georgia,serif;color:#073765}a{display:inline-block;margin-top:18px;background:#0783b8;color:#fff;text-decoration:none;padding:13px 22px;border-radius:4px;font-weight:bold}</style></head><body><div class="box"><h1>Thank you for contacting ASC Partners.</h1><p>Your inquiry has been submitted. Our team will get back with you.</p><a href="/">Return to Home</a></div><script>
+(function () {
+  // A direct visit to this URL must never count as a contact-form conversion.
+  var pending = false;
+  try {
+    pending = sessionStorage.getItem('asc_verified_submission_pending') === '1';
+    if (pending) sessionStorage.removeItem('asc_verified_submission_pending');
+  } catch (error) { return; }
+  if (!pending) return;
+
+  // Netlify already injects the site-wide Google tag into the document head.
+  // Wait for that tag, then send the conversion from this stable page.
+  var attempts = 0;
+  function sendWhenReady() {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-18533620878/eeNcCL6p8KsdEI65woVF',
+        'value': 1.0,
+        'currency': 'USD'
+      });
+    } else if (++attempts < 100) {
+      setTimeout(sendWhenReady, 100);
+    }
+  }
+  sendWhenReady();
+}());
+</script></body></html>
